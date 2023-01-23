@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8zv53UGiNmkITOmRRquy2VsksyZtKkBxa9peqc3knOc=",
+  "Source": "TaskMasterApi",
+  "BasePath": "_content/TaskMasterApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
