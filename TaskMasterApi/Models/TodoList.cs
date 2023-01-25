@@ -4,12 +4,6 @@
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<Todo> Todos { get; set; }
-
-        public TodoList(string title)
-        {
-            Title = title;
-            Todos = new List<Todo>();
-        }
+        public virtual IList<Todo> Todos { get; set; } = new List<Todo>();
     }
 }

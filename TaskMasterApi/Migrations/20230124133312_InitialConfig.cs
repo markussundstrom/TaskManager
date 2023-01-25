@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TaskMasterApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialConfiguration : Migration
+    public partial class InitialConfig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,8 +40,8 @@ namespace TaskMasterApi.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Priority = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    Complete = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TodoListId = table.Column<int>(type: "int", nullable: true)
+                    Completed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TodoListId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +50,8 @@ namespace TaskMasterApi.Migrations
                         name: "FK_Todos_TodoLists_TodoListId",
                         column: x => x.TodoListId,
                         principalTable: "TodoLists",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

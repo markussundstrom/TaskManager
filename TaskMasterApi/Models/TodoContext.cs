@@ -13,5 +13,26 @@ namespace TaskMasterApi.Models
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TodoList>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Title).IsRequired();
+            });
+
+            modelBuilder.Entity<Todo>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Title).IsRequired();
+                entity.Property(e => e.Description);
+                entity.Property(e => e.Priority);
+                entity.Property(e => e.Completed);
+                entity.HasOne(d => d.TodoList).WithMany(c => c.Todos);
+            });
+        }
+
     }
 }

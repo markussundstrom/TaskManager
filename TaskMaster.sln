@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMasterUi", "TaskMasterUi\TaskMasterUi.csproj", "{08FD18E9-C05E-4412-BB76-7E4A74689485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskMasterUi", "TaskMasterUi\TaskMasterUi.csproj", "{08FD18E9-C05E-4412-BB76-7E4A74689485}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskMasterApi", "TaskMasterApi\TaskMasterApi.csproj", "{86BB3C23-0069-40CA-BFC6-4E854211420C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskMasterApi", "TaskMasterApi\TaskMasterApi.csproj", "{86BB3C23-0069-40CA-BFC6-4E854211420C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

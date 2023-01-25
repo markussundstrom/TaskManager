@@ -11,28 +11,29 @@ namespace TaskMasterApi.Models
 
         public String Title { get; set; }
         public string Description { get; set; }
-        public Priority Priority { get; set; }
-        public bool Complete {get; set; }
-
+        public TodoPriority Priority { get; set; }
+        public bool Completed {get; set; }
+        public virtual TodoList TodoList { get; set; }
+/*
         public Todo(){ }
 
-        public Todo(string title, byte? priority, string description = "")
+        public Todo(string title, TodoPriority priority, string description = "")
         {
             Title = title;
             Description = description;
-            if (priority >= 1 && 3 >= priority)
+            if ((byte)priority >= 1 && 3 >= (byte)priority)
             {
-                Priority = (Priority)priority;
+                Priority = (TodoPriority)priority;
             }
             else
             {
-                Priority = Priority.Low;
+                Priority = TodoPriority.Low;
             }
         } 
 
-    }
+*/    }
 
-    public enum Priority : byte
+    public enum TodoPriority : byte
     {
         High = 1,
         Medium = 2,

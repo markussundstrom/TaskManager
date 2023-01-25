@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using TaskMasterApi.DTO;
 using TaskMasterApi.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,129 +24,118 @@ namespace TaskMasterApi.Controllers
         /// <returns>A list of todolists</returns>
         [HttpGet]
         [Route("todolists")]
-        public async Task<ActionResult<IEnumerable<object>>> GetTodoLists()
+        public async Task<ActionResult<IEnumerable<TodoListOverviewDTO>>> GetTodoLists()
         {
             List<object> listobjects = new List<object>();
 
             await foreach (TodoList list in _context.TodoLists)
             {
-                listobjects.Add(TodoListToObject(list));
+                listobjects.Add(TodoListToTodoListOverviewDTO(list));
             }
             return Ok(listobjects);
         }
 
         [HttpGet]
         [Route("todolist/{id}")]
-        public async Task<ActionResult<object>> GetSingleTodoList(int id)
+        public async Task<ActionResult<TodoListDTO>> GetSingleTodoList(int id)
         {
-            TodoList? todolist = await _context.TodoLists.SingleOrDefaultAsync(l => l.Id == id);
+            TodoList? todolist = await _context.TodoLists.Include("Todos").SingleOrDefaultAsync(l => l.Id == id);
             if (todolist == null)
             {
                 return NotFound();
             }
-            return Ok(TodoListToObject(todolist));
+            return Ok(TodoListToTodoListDTO(todolist));
         }
 
         [HttpGet]
         [Route("todo/{id}")]
-        public async Task<ActionResult<object>> GetSingleTodo(int id)
+        public async Task<ActionResult<TodoDTO>> GetSingleTodo(int id)
         {
             Todo? todo = await _context.Todos.SingleOrDefaultAsync(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
             }
-            return Ok(TodoToObject(todo));
+            return Ok(TodoToTodoDTO(todo));
         }
 
         [HttpPost]
-        [Route("tasklists")]
-        public async Task<ActionResult<object>> PostTaskList([FromBody] JsonElement listObject)
+        [Route("todolists")]
+        public async Task<ActionResult<TodoListDTO>> PostTaskList(CreateTodoListDTO todoListDto)
         {
-            var newList = listObject.GetProperty("Title");
-            if(!((Type)newList.GetType()).GetProperties().Any(p => p.Name.Equals("Title")))
+            if (string.IsNullOrEmpty(todoListDto.Title))
             {
                 return BadRequest();
             }
-            string title = (string)newList.GetType().GetProperty("Title").GetValue(newList, null);
-            if (string.IsNullOrEmpty(title))
-            {
-                return BadRequest();
-            }
-            TodoList newTodoList = new TodoList(title);
+            TodoList newTodoList = new TodoList{Title = todoListDto.Title };
             _context.TodoLists.Add(newTodoList);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetSingleTodoList), new {Id = newTodoList.Id });
+            return CreatedAtAction("GetSingleTodoList", new {id = newTodoList.Id }, TodoListToTodoListDTO(newTodoList));
         }
 
         [HttpPost]
-        [Route("tasklist/{id}/todos")]
-        public async Task<ActionResult<object>> PostTodo(int id, [FromBody] object newTodo)
+        [Route("todolist/{id}/todos")]
+        public async Task<ActionResult<TodoDTO>> PostTodo(int id, CreateTodoDTO todoDto)
         {
-            if(!((Type)newTodo.GetType()).GetProperties().Any(p => p.Name.Equals("Title")))
-            {
-                return BadRequest();
-            }
-            string title = (string)newTodo.GetType().GetProperty("Title").GetValue(newTodo, null);
-            if (string.IsNullOrEmpty(title))
-            {
-                return BadRequest();
-            }
-            TodoList? list = await _context.TodoLists.SingleOrDefaultAsync(t => t.Id == id);
+            TodoList? list = await _context.TodoLists.Include("Todos").SingleOrDefaultAsync(t => t.Id == id);
             if (list == null)
             {
                 return NotFound();
             }
-            string? description = (string)newTodo.GetType().GetProperty("Description").GetValue(newTodo, null);
-            byte? priority = (byte)newTodo.GetType().GetProperty("Priority").GetValue(newTodo, null);
-            Todo todo = new Todo(title, priority, description);
+
+            if (string.IsNullOrEmpty(todoDto.Title))
+            {
+                return BadRequest();
+            }
+
+            Todo todo = new Todo();
+            todo.Title = todoDto.Title;
+            todo.Priority = todoDto.Priority;
+            todo.Description = todoDto.Description;
             list.Todos.Add(todo);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetSingleTodo), new {Id = todo.Id });
+            return CreatedAtAction("GetSingleTodo", new {id = todo.Id }, TodoToTodoDTO(todo));
         }
 
         [HttpPut]
         [Route("todolist/{id}")]
-        public async Task<ActionResult<object>> PutTodoList(int id, [FromBody] object listObject)
+        public async Task<ActionResult<TodoListDTO>> PutTodoList(int id, CreateTodoListDTO todoListDto)
         {
-            if(!((Type)listObject.GetType()).GetProperties().Any(p => p.Name.Equals("Title")))
-            {
-                return BadRequest();
-            }
-            string? title = (string)listObject.GetType().GetProperty("Title").GetValue(listObject, null);
-            if (string.IsNullOrEmpty(title))
-            {
-                return BadRequest();
-            }
             TodoList? list = await _context.TodoLists.SingleOrDefaultAsync(t => t.Id == id);
             if (list == null)
             {
                 return NotFound();
             }
-            list.Title = title;
+
+            if (string.IsNullOrEmpty(todoListDto.Title))
+            {
+                return BadRequest();
+            }
+
+            list.Title = todoListDto.Title;
             await _context.SaveChangesAsync();
-            return Ok(TodoListToObject(list));
+            return Ok(TodoListToTodoListDTO(list));
         }
 
         [HttpPut]
         [Route("todo/{id}")]
-        public async Task<ActionResult<object>> PutTodo(int id, [FromBody] object todoObject)
+        public async Task<ActionResult<TodoDTO>> PutTodo(int id, EditTodoDTO todoDto)
         {
-            Todo todo = await _context.Todos.SingleOrDefaultAsync(t => t.Id == id);
+            Todo? todo = await _context.Todos.SingleOrDefaultAsync(t => t.Id == id);
             if (todo == null)
             {
                 return NotFound();
             }
-            todo.Title = (string?)todoObject.GetType().GetProperty("Title").GetValue(todoObject, null) ?? todo.Title;
-            todo.Description = (string?)todoObject.GetType().GetProperty("Description").GetValue(todoObject, null) ?? todo.Description;
-            short? priority = (short?)todoObject.GetType().GetProperty("Priority").GetValue(todoObject, null);
-            if (priority >= 1 && priority <= 3)
+            todo.Title = todoDto.Title ?? todo.Title;
+            todo.Description = todoDto.Description ?? todo.Description;
+
+            if ((byte)todoDto.Priority >= 1 && (byte)todoDto.Priority <= 3)
             {
-                todo.Priority = (Priority)priority;
+                todo.Priority = todoDto.Priority;
             }
-            todo.Complete = (bool?)todoObject.GetType().GetProperty("Complete").GetValue(todoObject, null) ?? todo.Complete;
+            todo.Completed = todoDto.Completed ?? todo.Completed;
             await _context.SaveChangesAsync();
-            return Ok(TodoToObject(todo));
+            return Ok(TodoToTodoDTO(todo));
         }
 
 
@@ -176,25 +166,27 @@ namespace TaskMasterApi.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-                
 
-        private object TodoListToObject(TodoList todolist)
+        private TodoListOverviewDTO TodoListToTodoListOverviewDTO (TodoList todolist)
         {
-            List<object> Todos = new List<object>();
-            foreach (Todo todo in todolist.Todos)
-            {
-                Todos.Add(TodoToObject(todo));
-            }
-
-            return new {Id = todolist.Id, Title = todolist.Title,
-                        Todos = Todos};
+            return new TodoListOverviewDTO{Title = todolist.Title, Id = todolist.Id };
         }
 
-        private object TodoToObject(Todo todo)
+        private TodoListDTO TodoListToTodoListDTO (TodoList todolist)
         {
-            return new {Id = todo.Id, Title = todo.Title,
-                        Description = todo.Description, 
-                        Complete = todo.Complete, Priority = todo.Priority};
+            TodoListDTO todoListDto = new TodoListDTO{Title = todolist.Title, Id = todolist.Id};
+            foreach (Todo todo in todolist.Todos)
+            {
+                todoListDto.Todos.Add(TodoToTodoDTO(todo));
+            }
+            return todoListDto;
+        }
+
+        private TodoDTO TodoToTodoDTO (Todo todo)
+        {
+            return new TodoDTO {Id = todo.Id, Title = todo.Title, 
+                                Completed = todo.Completed, Priority = todo.Priority,
+                                Description = todo.Description };
         }
     }
 }
