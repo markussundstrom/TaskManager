@@ -1,0 +1,30 @@
+﻿@page "/todolistoverview"
+@inject TaskMasterService taskMaster
+
+<PageTitle>Overview of Todo Lists</PageTitle>
+
+<h1>Overview of Todo Lists</h1>
+<ul>
+    @if (_lists == null)
+    {
+        <p>Loading</p>
+    }
+    else
+    {
+        @foreach (TodoListOverview list in _lists)
+        {
+            <li>@list.Title</li>
+        }
+    }
+</ul>
+
+
+@code 
+{
+    private List<TodoListOverview>? _lists;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _lists = await taskMaster.GetTodoLists();
+    }
+}

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using TaskMasterUi.Data;
+using TaskMasterUi.Services;
 
 namespace TaskMasterUi
 {
@@ -14,6 +15,9 @@ namespace TaskMasterUi
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
+            //builder.Services.AddSingleton<TaskManagerService>();
+            builder.Services.AddHttpClient<TaskMasterService>(httpClient =>
+                httpClient.BaseAddress = new("https://localhost:7113"));
 
             var app = builder.Build();
 
