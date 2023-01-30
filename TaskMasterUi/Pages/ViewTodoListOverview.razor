@@ -4,24 +4,25 @@
 <PageTitle>Overview of Todo Lists</PageTitle>
 
 <h1>Overview of Todo Lists</h1>
-<ul>
     @if (_lists == null)
     {
         <p>Loading</p>
     }
     else
     {
-        @foreach (TodoListOverview list in _lists)
+        <ul>
+        @foreach (TodoListOverviewDTO list in _lists)
         {
-            <li>@list.Title</li>
+            int index = list.Id;
+            <li><a href="./todolist/@list.Id">@list.Title</a></button><button @onclick="@(e => RequestDelete(index)"></button></li>
+        </ul>
         }
     }
-</ul>
 
 
 @code 
 {
-    private List<TodoListOverview>? _lists;
+    private List<TodoListOverviewDTO>? _lists;
 
     protected override async Task OnInitializedAsync()
     {

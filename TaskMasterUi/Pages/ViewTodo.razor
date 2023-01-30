@@ -1,0 +1,79 @@
+﻿@page "/todo/{Id:int}"
+@inject TaskMasterService taskMaster
+
+@if (_todo == null)
+{
+    <p>Loading</p>
+}
+else
+{
+    @if (_editing)
+    {
+        <EditForm Model="@_edit">
+            Title: <InputText @bind-Value=_edit.Title id="Title"></InputText><br>
+            Description: <InputText @bind-Value=_edit.Description id="Description"></InputText><br>
+            Priority: <InputSelect @bind-Value=_edit.Priority>
+                @foreach (var p in Enum.GetValues(typeof(TodoPriority)))
+                {
+                    <option value="@p">@p</option>
+                }
+            </InputSelect><br>
+            Completed: <InputCheckbox @bind-Value=_edit.Completed></InputCheckbox><br>
+            <Button @onclick=CancelEdit>Cancel</Button><Button @onclick=SaveEdit>Save</Button>
+        </EditForm>
+    }
+    else
+    {
+        <p>
+            @_todo.Title<br>
+            @_todo.Description<br>
+            Priority:@_todo.Priority<br>
+            Completed:@(_todo.Completed ? "\u2714" : "\u2718")<br>
+            <Button @onclick=SetEdit>Edit</Button>
+        </p>
+    }
+    @if (listId != 0)
+    {
+        <p><a href="./todolist/@listId">&lt;-</a></p>
+    }
+    else
+    {
+        <p><a href="./todolistoverview">&lt;-</a></p>
+    }
+}
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "listId")]
+    public int listId { get; set; }
+    private TodoDTO? _todo;
+    private EditTodoDTO _edit = new EditTodoDTO(); 
+    private bool _editing;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _todo = await taskMaster.GetSingleTodo(Id);
+    }
+
+    private void SetEdit()
+    {
+        _editing = true;
+        _edit.Title = _todo.Title;
+        _edit.Description = _todo.Description;
+        _edit.Priority = _todo.Priority;
+        _edit.Completed = _todo.Completed;
+    }
+
+    private void CancelEdit()
+    {
+        _editing = false;
+    }
+
+    private async Task SaveEdit()
+    {
+         await taskMaster.PutTodo(_todo.Id, _edit);
+         _todo = await taskMaster.GetSingleTodo(_todo.Id);
+        _editing = false;
+    }
+}

@@ -1,0 +1,31 @@
+﻿@page "/todolist/{Id:int}"
+@inject TaskMasterService taskMaster
+
+<h3>TodoList</h3>
+@if (_todoList == null)
+{
+    <p>Loading</p>
+}
+else
+{
+    <h4>@_todoList.Title</h4>
+    <ul>
+        @foreach (TodoDTO todo in _todoList.Todos)
+        {
+            <li><a href="./todo/@todo.Id?listId=@_todoList.Id">@todo.Title</a></li>
+        }
+    </ul>
+}
+<p><a href="./todolistoverview">&lt;-</a></p>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private TodoListDTO _todoList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _todoList = await taskMaster.GetSingleTodoList(Id);
+    }
+}

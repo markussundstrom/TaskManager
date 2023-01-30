@@ -11,12 +11,27 @@ namespace TaskMasterUi.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<TodoListOverview>>? GetTodoLists()
+        public async Task<List<TodoListOverviewDTO>>? GetTodoLists()
         {
-            List<TodoListOverview> todolists = new List<TodoListOverview>();
-            var response = await _httpClient.GetFromJsonAsync<List<TodoListOverview>>("api/todolists");
+            List<TodoListOverviewDTO> todolists = new List<TodoListOverviewDTO>();
+            var response = await _httpClient.GetFromJsonAsync<List<TodoListOverviewDTO>>("api/todolists");
             todolists.AddRange(response.ToList());
             return todolists;
+        }
+
+        public async Task<TodoListDTO>? GetSingleTodoList(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<TodoListDTO>("api/todolist/" + id);
+        }
+
+        public async Task<TodoDTO>? GetSingleTodo(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<TodoDTO>("api/todo/" + id);
+        }
+
+        public async Task PutTodo(int id, EditTodoDTO todo)
+        {
+            await _httpClient.PutAsJsonAsync<EditTodoDTO>("api/todo/" + id, todo);
         }
     }
 }
