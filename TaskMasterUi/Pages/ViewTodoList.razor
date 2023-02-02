@@ -16,36 +16,47 @@ else
             <li>
                 <input type="Checkbox" checked="@todo.Completed" @onchange="(e => CompletedChanged(index))">
                 <a href="./todo/@todo.Id?listId=@_todoList.Id">@todo.Title</a>
-                <button @onclick=@(e => RequestDelete(index))>Delete</button>
+                @if (_pagestate == Pagestate.None)
+                {
+                    <button @onclick=@(e => RequestDelete(index))>Delete</button>
+                }
             </li>
         }
     </ul>
 }
-@if (_deleteState)
+@switch (_pagestate)
 {
-    <p>Really delete @_todoToDelete.Title?</p>
-    <button @onclick="DeleteTodoList">Ok</button>
-    <button @onclick="CancelState">Cancel</button>
-}
-else if (_createState)
-{
-    <p>Enter information for new Todolist:</p>
-    <p><EditForm Model="@_todoToCreate">
-        Title:<InputText @bind-Value=_todoToCreate.Title Id="Title"></InputText>
-        Description:<InputText @bind-Value=_todoToCreate.Description Id="Description"></InputText>
-        Priority: <InputSelect @bind-Value=_todoToCreate.Priority>
-            @foreach (var p in Enum.GetValues(typeof(TodoPriority)))
-            {
-                <option value="@p">@p</option>
-            }
-         </InputSelect><br>
-    </EditForm></p>
-    <button @onclick="CreateTodoList">Ok</button>
-    <button @onclick="@CancelState">Cancel</button>
-}
-else
-{
+    case Pagestate.DeleteState:
+        <p>Really delete @_todoToDelete.Title?</p>
+        <button @onclick="DeleteTodoList">Ok</button>
+        <button @onclick="CancelState">Cancel</button>
+        break;
+
+    case Pagestate.CreateState:
+        <p>Enter information for new Todo:</p>
+        <p><EditForm Model="@_todoToCreate">
+            Title:<InputText @bind-Value=_todoToCreate.Title Id="Title"></InputText>
+            Description:<InputText @bind-Value=_todoToCreate.Description Id="Description"></InputText>
+            Priority: <InputSelect @bind-Value=_todoToCreate.Priority>
+                @foreach (var p in Enum.GetValues(typeof(TodoPriority)))
+                {
+                    <option value="@p">@p</option>
+                }
+             </InputSelect><br>
+        </EditForm></p>
+        <button @onclick="CreateTodoList">Ok</button>
+        <button @onclick="@CancelState">Cancel</button>
+        break;
+
+    case Pagestate.ChangeNameState:
+        <p>Enter new name for todolist:</p>
+        <input type="text" @bind="_editedList.Title"></input>
+        break;
+
+    case (_):
     <button @onclick="RequestCreate">New Todo</button>
+    <button @onclick="RequestEditTitle">Edit List-name</button>
+    break;
 }
 <p><a href="./todolistoverview">&lt;-</a></p>
 
@@ -56,8 +67,8 @@ else
     private TodoListDTO _todoList;
     private CreateTodoDTO? _todoToCreate;
     private TodoDTO? _todoToDelete;
-    private bool _deleteState = false;
-    private bool _createState = false;
+    private CreateTodoListDTO _editedList;
+    private Pagestate _pagestate = Pagestate.None;
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,17 +91,17 @@ else
         await taskMaster.EditTodo(todo.Id, editTodo);
     }
 
-        private void RequestDelete(int index)
+    private void RequestDelete(int index)
     {
         _todoToDelete = _todoList.Todos.SingleOrDefault(t => t.Id == index);
-        _deleteState = true;
+        _pagestate = Pagestate.DeleteState;
     }
 
     private async Task DeleteTodoList()
     {
         await taskMaster.DeleteTodo(_todoToDelete.Id);
         _todoToDelete = null;
-        _deleteState = false;
+        _pagestate = Pagestate.None;
         _todoList = await taskMaster.GetSingleTodoList(Id);
         StateHasChanged();
     }
@@ -98,14 +109,29 @@ else
     private void RequestCreate()
     {
         _todoToCreate = new CreateTodoDTO();
-        _createState = true;
+        _pagestate = Pagestate.CreateState;
     }
 
     private async Task CreateTodoList()
     {
         await taskMaster.CreateTodo(Id, _todoToCreate);
         _todoToCreate = null;
-        _createState = false;
+        _pagestate = Pagestate.None;
+        _todoList = await taskMaster.GetSingleTodoList(Id);
+        StateHasChanged();
+    }
+
+    private void RequestEditTitle()
+    {
+        _editedList = new CreateTodoListDTO();
+        _pagestate = Pagestate.ChangeNameState;
+    }
+
+    private async Task EditListTitle()
+    {
+        await taskMaster.EditTodoList(Id, _editedList);
+        _editedList = null;
+        _pagestate = Pagestate.None;
         _todoList = await taskMaster.GetSingleTodoList(Id);
         StateHasChanged();
     }
@@ -114,7 +140,16 @@ else
     {
         _todoToDelete = null;
         _todoToCreate = null;
-        _deleteState = _createState = false;
+        _editedList = null;
+        _pagestate = Pagestate.None;
+    }
+
+    public enum Pagestate
+    {
+        None = 0,
+        DeleteState = 1,
+        CreateState = 2,
+        ChangeNameState = 3
     }
 }
 
