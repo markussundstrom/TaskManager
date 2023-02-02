@@ -51,6 +51,8 @@ else
     case Pagestate.ChangeNameState:
         <p>Enter new name for todolist:</p>
         <input type="text" @bind="_editedList.Title"></input>
+        <button @onclick="EditListTitle">Save</button>
+        <button @onclick="CancelState">Cancel</button>
         break;
 
     case (_):
