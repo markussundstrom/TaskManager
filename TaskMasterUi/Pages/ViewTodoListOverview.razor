@@ -4,28 +4,87 @@
 <PageTitle>Overview of Todo Lists</PageTitle>
 
 <h1>Overview of Todo Lists</h1>
+<ul>
     @if (_lists == null)
     {
         <p>Loading</p>
     }
     else
     {
-        <ul>
         @foreach (TodoListOverviewDTO list in _lists)
         {
             int index = list.Id;
-            <li><a href="./todolist/@list.Id">@list.Title</a></button><button @onclick="@(e => RequestDelete(index)"></button></li>
-        </ul>
+            <li><a href="./todolist/@list.Id">@list.Title</a>&nbsp;<button @onclick="@(e => RequestDelete(index))">Delete</button></li>
         }
     }
-
+</ul>
+@if (_deleteState)
+{
+    <p>Really delete @_listToDelete.Title?</p>
+    <button @onclick="DeleteTodoList">Ok</button>
+    <button @onclick="CancelState">Cancel</button>
+}
+else if (_createState)
+{
+    <p>Enter information for new Todolist:</p>
+    <p><EditForm Model="@_listToCreate">
+        Title:<InputText @bind-Value=_listToCreate.Title Id="Title"></InputText>
+    </EditForm></p>
+    <button @onclick="CreateTodoList">Ok</button>
+    <button @onclick="@CancelState">Cancel</button>
+}
+else
+{
+    <button @onclick="RequestCreate">New Todolist</button>
+}
 
 @code 
 {
     private List<TodoListOverviewDTO>? _lists;
+    private CreateTodoListDTO? _listToCreate;
+    private TodoListOverviewDTO? _listToDelete;
+    private bool _deleteState = false;
+    private bool _createState = false;
 
     protected override async Task OnInitializedAsync()
     {
         _lists = await taskMaster.GetTodoLists();
+    }
+
+    private void RequestDelete(int index)
+    {
+        _listToDelete = _lists.SingleOrDefault(l => l.Id == index);
+        _deleteState = true;
+    }
+
+    private async Task DeleteTodoList()
+    {
+        await taskMaster.DeleteTodoList(_listToDelete.Id);
+        _listToDelete = null;
+        _deleteState = false;
+        _lists = await taskMaster.GetTodoLists();
+        StateHasChanged();
+    }
+
+    private void RequestCreate()
+    {
+        _listToCreate = new CreateTodoListDTO();
+        _createState = true;
+    }
+
+    private async Task CreateTodoList()
+    {
+        await taskMaster.CreateTodoList(_listToCreate);
+        _listToCreate = null;
+        _createState = false;
+        _lists = await taskMaster.GetTodoLists();
+        StateHasChanged();
+    }
+
+    private void CancelState()
+    {
+        _listToDelete = null;
+        _listToCreate = null;
+        _deleteState = _createState = false;
     }
 }

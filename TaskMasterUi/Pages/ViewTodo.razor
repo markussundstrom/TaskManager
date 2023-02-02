@@ -72,8 +72,8 @@ else
 
     private async Task SaveEdit()
     {
-         await taskMaster.PutTodo(_todo.Id, _edit);
+         await taskMaster.EditTodo(_todo.Id, _edit);
          _todo = await taskMaster.GetSingleTodo(_todo.Id);
-        _editing = false;
+         _editing = false;
     }
 }

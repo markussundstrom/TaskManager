@@ -29,9 +29,34 @@ namespace TaskMasterUi.Services
             return await _httpClient.GetFromJsonAsync<TodoDTO>("api/todo/" + id);
         }
 
-        public async Task PutTodo(int id, EditTodoDTO todo)
+        public async Task EditTodoList(int id, CreateTodoListDTO todoList)
+        {
+            await _httpClient.PutAsJsonAsync<CreateTodoListDTO>("api/todolist/" + id, todoList);
+        }
+
+        public async Task EditTodo(int id, EditTodoDTO todo)
         {
             await _httpClient.PutAsJsonAsync<EditTodoDTO>("api/todo/" + id, todo);
+        }
+
+        public async Task CreateTodoList(CreateTodoListDTO todoList)
+        {
+            await _httpClient.PostAsJsonAsync<CreateTodoListDTO>("api/todolists", todoList);
+        }
+
+        public async Task CreateTodo(int listId, CreateTodoDTO todo)
+        {
+            await _httpClient.PostAsJsonAsync<CreateTodoDTO>("api/todolist/" + listId + "/todos", todo);
+        }
+
+        public async Task DeleteTodoList(int id)
+        {
+            await _httpClient.DeleteAsync("api/todolist/" + id);
+        }
+
+        public async Task DeleteTodo(int id)
+        {
+            await _httpClient.DeleteAsync("api/todo/" + id);
         }
     }
 }
