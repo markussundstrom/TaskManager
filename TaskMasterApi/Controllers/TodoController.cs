@@ -90,7 +90,7 @@ namespace TaskMasterApi.Controllers
 
             Todo todo = new Todo();
             todo.Title = todoDto.Title;
-            todo.Priority = todoDto.Priority;
+            todo.Priority = TodoPriority.IsDefined(typeof(TodoPriority), todoDto.Priority) ? todoDto.Priority : TodoPriority.Low;
             todo.Description = todoDto.Description;
             list.Todos.Add(todo);
             await _context.SaveChangesAsync();
