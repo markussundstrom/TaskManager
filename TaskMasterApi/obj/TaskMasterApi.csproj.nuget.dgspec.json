@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marku\\source\\repos\\TaskMaster\\TaskMasterApi\\TaskMasterApi.csproj": {}
+    "/home/markus/With-Without/TaskManager/TaskMasterApi/TaskMasterApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marku\\source\\repos\\TaskMaster\\TaskMasterApi\\TaskMasterApi.csproj": {
+    "/home/markus/With-Without/TaskManager/TaskMasterApi/TaskMasterApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marku\\source\\repos\\TaskMaster\\TaskMasterApi\\TaskMasterApi.csproj",
+        "projectUniqueName": "/home/markus/With-Without/TaskManager/TaskMasterApi/TaskMasterApi.csproj",
         "projectName": "TaskMasterApi",
-        "projectPath": "C:\\Users\\marku\\source\\repos\\TaskMaster\\TaskMasterApi\\TaskMasterApi.csproj",
-        "packagesPath": "C:\\Users\\marku\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marku\\source\\repos\\TaskMaster\\TaskMasterApi\\obj\\",
+        "projectPath": "/home/markus/With-Without/TaskManager/TaskMasterApi/TaskMasterApi.csproj",
+        "packagesPath": "/home/markus/.nuget/packages/",
+        "outputPath": "/home/markus/With-Without/TaskManager/TaskMasterApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\marku\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/markus/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -74,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.405/RuntimeIdentifierGraph.json"
         }
       }
     }

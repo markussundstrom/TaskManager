@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZY+zbjFCH+iS6y1BejNrVrh5780wRR73CwoGWxQWnBAxJxa87O/70A3xRx+GxDrjummL+GvMqVF6h3T8zzUbTQ==",
+  "dgSpecHash": "nDJJJ4pWxjLLnpTZOzj19uNsBkX+CIOrJrFjjZdDvnqfvOuEGwNTIW0z+YPdcQBnsreDgrTvT9uj7yL9ecl1Lw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\marku\\source\\repos\\TaskMaster\\TaskMasterUi\\TaskMasterUi.csproj",
+  "projectFilePath": "/home/markus/With-Without/TaskManager/TaskMasterUi/TaskMasterUi.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

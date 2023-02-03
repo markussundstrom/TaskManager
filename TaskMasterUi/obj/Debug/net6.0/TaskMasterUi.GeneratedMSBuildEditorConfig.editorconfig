@@ -8,65 +8,65 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TaskMasterUi
 build_property.RootNamespace = TaskMasterUi
-build_property.ProjectDir = C:\Users\marku\source\repos\TaskMaster\TaskMasterUi\
+build_property.ProjectDir = /home/markus/With-Without/TaskManager/TaskMasterUi/
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\marku\source\repos\TaskMaster\TaskMasterUi
+build_property.MSBuildProjectDirectory = /home/markus/With-Without/TaskManager/TaskMasterUi
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/App.razor]
+[/home/markus/With-Without/TaskManager/TaskMasterUi/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/ViewTodo.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld1RvZG8ucmF6b3I=
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/ViewTodo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVmlld1RvZG8ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/ViewTodoList.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld1RvZG9MaXN0LnJhem9y
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/ViewTodoList.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVmlld1RvZG9MaXN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/ViewTodoListOverview.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlld1RvZG9MaXN0T3ZlcnZpZXcucmF6b3I=
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/ViewTodoListOverview.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVmlld1RvZG9MaXN0T3ZlcnZpZXcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/_Imports.razor]
+[/home/markus/With-Without/TaskManager/TaskMasterUi/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Shared/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-sre1c054d9
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-xsc1o2rgv3
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Shared/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-z81kprs4w3
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ocag68gc3n
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/_Host.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/marku/source/repos/TaskMaster/TaskMasterUi/Pages/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+[/home/markus/With-Without/TaskManager/TaskMasterUi/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
